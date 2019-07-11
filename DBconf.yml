@@ -1,0 +1,43 @@
+---
+-
+  hosts: gcp
+  tasks:
+    -
+      name: remove existing telgraf.conf file
+      shell: "/bin/rm -rf /etc/telegraf/telegraf.conf"
+    -
+      name: Ansible copy telegraf.conf file to all gcp instances
+      copy:
+        src: /home/ishai/telegraf.conf
+        dest: /etc/telegraf
+    -
+      name: Ansible copy script file to all gcp instances
+      copy:
+        src: /home/ishai/ansible_scripts/DBconf.yml
+        dest: /etc/telegraf
+    -
+
+     name: Change ownership, group and permissions to telegraf.conf file
+     file:
+       path: /etc/telegraf/telegraf.conf
+       owner: root
+       group: root
+       mode: '777'
+    -
+      name: Restart telegraf service
+      service:
+        name: telegraf
+        state: restarted
+    -
+
+      name: checking service status
+      command: systemctl status "{{ item }}"
+      with_items:
+      - telegraf
+      register: result
+      ignore_errors: yes
+
+    -
+      name: showing report
+      debug:
+       var: result

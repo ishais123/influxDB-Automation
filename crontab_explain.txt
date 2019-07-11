@@ -1,0 +1,11 @@
+# To add or edit crontab task to this project
+
+crontab -e
+
+# To see tcrontab task that update Google cloud IP's :
+
+crontab -l | grep gcloud
+
+# To see crontab logs :
+
+grep CRON /var/log/syslog
