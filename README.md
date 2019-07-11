@@ -1,2 +1,2 @@
 # influxDB-Automation
-automate update influxDB conf file  in GCP instances using Ansible
+Automate update influxDB conf file  in GCP instances using Ansible, bash script and crontab
